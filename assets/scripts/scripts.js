@@ -1,113 +1,82 @@
-var secondsRemaining,
-    intervalHandle,
-    isPaused = false;
+//global variables
+var intervalHandle,
+    isPaused,
+    deadline;
 
-    //TODO: FIX NaN:NaN issue???
 
+var resetCountdown = function(){
 
-function tick(){
-  //hide start button
-  document.getElementById('start').style.display = 'none';
-  //show reset button 
-  document.getElementById('reset').style.display = 'inline';  
+};
+var pauseCountdown = function(){};
 
-  //grab time
-  var timeDisplay = document.getElementById('time');
-
-  //time variables
-  var min,
-      sec;
-
-  //if the clock isn't paused
-  // if(!isPaused){
-    //turn into mm:ss format
-    min = Math.floor(secondsRemaining / 60);
-    sec = secondsRemaining - (min * 60);
-
-    //leading zero
-    if(sec < 10){
-      sec = '0' + sec;    
-    }
-
-    //concatenate
-    var timeRemaining = min + ':' + sec;
-    //output to input#time
-    timeDisplay.value = timeRemaining;
-
-  // }
+//start timer
+var startCountdown = function(){
+  //grab user input
+  var timer = document.getElementById('time').value;
   
+  //disable input field
+  document.getElementById('time').disabled = true;
+  /*
+  TODO:
+  1. Check if timer isNaN
+  2. Test it with pauseCountdown();
+  */
 
-  //stop if secondsRemaining === 0
-  if(secondsRemaining === 0){
-    console.log('Done!');
-    clearInterval(intervalHandle);
-    //TODO: do something when it stops
+  //grab current time
+  var currentTime = new Date();
+  //set the deadline by adding 'timer' to get future date
+  deadline = new Date(currentTime.getTime() + (timer * 60 * 1000));
+
+  console.log('current time', currentTime);
+  console.log('deadline', deadline);
+
+  //now countdown to deadline
+  tick('time', deadline);
+};
+
+//clock countdown function
+var tick = function(id, endtime){
+  //grab input field for time display
+  var clock = document.getElementById(id);
+
+  var update = function(){
+    var t = grabTimeRemaining(endtime);
+    //concatenate 
+    clock.value = t.minutes + ':' + t.seconds;
+    //leading zero for seconds
+    if(t.seconds < 10){
+      clock.value = t.minutes + ':0' + t.seconds;
+    }
+    //once it reaches 0, stop the clock
+    if(t.total <= 0){
+      clearInterval(intervalHandle);
+      document.getElementById('start').style.display = 'none';
+      document.getElementById('reset').style.display = 'inline';
+    }    
+  };
+  //run first to avoid delay
+  update();
+
+  var intervalHandle = setInterval(update, 1000);
+};
+
+//calculate remaining time
+var grabTimeRemaining = function(endtime){
+  //hold remaining time until 'deadline'
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  //convert to usable format
+  var seconds = Math.floor( (t/1000) % 60 );
+  var minutes = Math.floor( (t/1000/60) % 60 );
+  var hours = Math.floor( (t/(1000*60*60)) % 24);
+  //output
+  return {
+    'total': t,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
   }
+};
 
-  //decrease count from start
-  secondsRemaining--;
-  
-}
-
-function resetCountdown() {
-  clearInterval(intervalHandle);
-  //show start button 
-  document.getElementById('start').style.display = 'inline';  
-  //hide reset button 
-  document.getElementById('reset').style.display = 'none';  
-
-  //set time back to 25 minutes
-  document.getElementById('time').value = 25;  
-}
-
-function pauseCountdown(){
-  // console.log('you pressed pause');
-
-  //stop the timer
-  clearInterval(intervalHandle);
-  isPaused = true;
-  document.getElementById('start').style.display = 'inline';
-}
-
-
-function startCountdown(){
-  //grab the time from input 
-  grabTime();
-  var minutes = grabTime();
-  console.log(minutes);
-
-  //check return value
-    // check if not a number
-    if (isNaN(minutes)) {
-        alert("Please enter a number!");
-        return;
-    }
-
-  
-  //convert minutes to seconds to start countdown
-  secondsRemaining = minutes * 60;
-  
-  
-  //call the tick function every second
-  intervalHandle = setInterval(tick, 1000);
-
-  //disable time input
-  document.getElementById('time').disabled = true;  
-
-}
-
-
-// grab time & check if it's proper format
-function grabTime(){  
-  var minutes = document.getElementById('time').value;
-  //check if minutes has values that aren't 0-9 or :
-  // var isTimeFormat = /^[0-5]?[0-9]((:)?[0-5][0-9])?$/.test(minutes);
-  
-  //check if proper time format/number or not
-  return isNaN(minutes)? false : minutes;
-}
-
-//set pomodoro clock to 25:00 when page loads
 window.onload = function(){
   
   //set time to 25 minutes
@@ -135,7 +104,6 @@ window.onload = function(){
   document.getElementById('clock').appendChild(pauseButton);
   document.getElementById('clock').appendChild(startButton);
   document.getElementById('clock').appendChild(resetButton);
-  
-  
+    
 };
 
