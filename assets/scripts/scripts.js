@@ -1,8 +1,9 @@
 //global variables
 var intervalHandle,
     deadline,
+    counter = 0,
     breakToggle = document.getElementById('breakToggle'),
-    isBreak = document.getElementById('breakToggle').checked;
+    isBreak;
 
 var resetCountdown = function(){
   //clear intervalHandle
@@ -98,6 +99,13 @@ var tick = function(endtime){
     //stop clock once it hits 0
     if(t.total <= 0){
       clearInterval(intervalHandle);
+      //reenable input
+      document.getElementById('time').disabled = false;
+      //show start and hide reset
+      document.getElementById('start').style.display = 'inline';
+      document.getElementById('reset').style.display = 'none';  
+      //update counter
+      afterSessionEnds();
     }
   }
   //run first to remove delay
@@ -107,9 +115,42 @@ var tick = function(endtime){
   intervalHandle = setInterval(updateClock,1000);
 };
 
-/**/
+/*
+TODO: 
+  1. Increase counter by 1 only if break isn't checked
+  2. Display counter
+  3. make breakToggle checked
+  4. update timer to 5 or 15 depending on # of counter
+*/
 var afterSessionEnds = function (){
+  var countDisplay = document.getElementById('counter');
+  //update counter if not break
+  console.log(isBreak);
+  if(!isBreak){    
+    counter += 1;
+    console.log(counter + ' session');    
+    countDisplay.innerHTML = counter;
+  }else {
+    document.getElementById('time').value = 5;  
+  }  
+};
 
+//detect if checkbox is checked or unchecked
+var clickBreakToggle = function(event){
+  var checkbox = event.target;
+
+  if(checkbox.checked){
+    //checked
+    isBreak = checkbox.checked;
+    //set timer value to 5 (minutes)
+    document.getElementById('time').value = 5;      
+  }else {
+    //unchecked
+    isBreak = checkbox.checked;
+    //TODO: improve this feature later on
+    //set timer value to 25 (minutes)
+    document.getElementById('time').value = 25;     
+  }
 };
 
 //calculate remaining time
@@ -134,6 +175,9 @@ window.onload = function(){
   //set time to 25 minutes
   document.getElementById('time').value = 25;  
 
+  //attach click event on breakToggle
+  breakToggle.onclick = clickBreakToggle;
+
   //create pause button
   var pauseButton = document.createElement('button');
   pauseButton.setAttribute('id', 'pause');
@@ -147,7 +191,6 @@ window.onload = function(){
   startButton.setAttribute('id', 'start');
   startButton.innerHTML = "Start";  
   startButton.onclick = startCountdown;  
-
 
   //create reset button
   var resetButton = document.createElement('button');
