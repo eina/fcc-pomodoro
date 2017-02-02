@@ -5,8 +5,19 @@ var intervalHandle,
 
 
 var resetCountdown = function(){
-
+  //clear intervalHandle
+  clearInterval(intervalHandle);
+  //set deadline to current time
+  deadline = new Date();
+  //input field enable
+  document.getElementById('time').disabled = false;
+  //set back to 25
+  document.getElementById('time').value = 25;
+  //hide reset button and show start button
+  document.getElementById('start').style.display = 'inline';
+  document.getElementById('reset').style.display = 'none';
 };
+
 var pauseCountdown = function(){};
 
 //start timer
@@ -30,34 +41,41 @@ var startCountdown = function(){
   console.log('current time', currentTime);
   console.log('deadline', deadline);
 
+  //show reset button and hide start button
+  document.getElementById('start').style.display = 'none';
+  document.getElementById('reset').style.display = 'inline';
+
   //now countdown to deadline
-  tick('time', deadline);
+  tick(deadline);
+
 };
 
 //clock countdown function
-var tick = function(id, endtime){
-  //grab input field for time display
-  var clock = document.getElementById(id);
-
-  var update = function(){
+var tick = function(endtime){
+  var updateClock = function(){
+    //grab input field
+    var time = document.getElementById('time');
+    
+    //grab time remaining based off deadline
     var t = grabTimeRemaining(endtime);
-    //concatenate 
-    clock.value = t.minutes + ':' + t.seconds;
-    //leading zero for seconds
-    if(t.seconds < 10){
-      clock.value = t.minutes + ':0' + t.seconds;
+    
+    //concatenate
+    time.value = t.minutes + ':' + t.seconds;  
+    
+    //leading 0's
+    if(t.seconds < 10){ 
+      time.value = t.minutes + ':0' + t.seconds;  
     }
-    //once it reaches 0, stop the clock
+
+    //stop clock once it hits 0
     if(t.total <= 0){
       clearInterval(intervalHandle);
-      document.getElementById('start').style.display = 'none';
-      document.getElementById('reset').style.display = 'inline';
-    }    
-  };
-  //run first to avoid delay
-  update();
-
-  var intervalHandle = setInterval(update, 1000);
+    }
+  }
+  //run first to remove delay
+  updateClock();  
+  //now tick
+  intervalHandle = setInterval(updateClock,1000);
 };
 
 //calculate remaining time
