@@ -13,12 +13,24 @@ var resetCountdown = function(){
   document.getElementById('time').disabled = false;
   //set back to 25
   document.getElementById('time').value = 25;
-  //hide reset button and show start button
+  //hide reset and pause button and show start button
   document.getElementById('start').style.display = 'inline';
+  document.getElementById('start').innerHTML = 'Start';
+  document.getElementById('start').onclick = startCountdown;
   document.getElementById('reset').style.display = 'none';
+  document.getElementById('pause').style.display = 'none';
 };
 
-var pauseCountdown = function(){};
+var pauseCountdown = function(){
+  //clear intervalHandle
+  clearInterval(intervalHandle);
+
+  //Start becomes visible and renamed to Continue
+  var startBtn = document.getElementById('start');
+  startBtn.innerHTML= 'Continue';
+  startBtn.style.display = 'inline';
+
+};
 
 //start timer
 var startCountdown = function(){
@@ -27,11 +39,23 @@ var startCountdown = function(){
   
   //disable input field
   document.getElementById('time').disabled = true;
-  /*
-  TODO:
-  1. Check if timer isNaN
-  2. Test it with pauseCountdown();
-  */
+
+  //format mm:ss -> mm.ss
+  timeFormat = /^[0-5]?[0-9]:[0-5][0-9]$/.test(timer);
+
+  if(timeFormat){
+    var timerArr = timer.split(':');
+    //grab the ss and change to decimal value
+    var secs = (timerArr[1]/60).toFixed(2) * 1;
+    //convert mm:ss -> mm.ss by adding mm & ss
+    var timer = +timerArr[0] + secs;
+  }
+
+  if(isNaN(timer) && !timeFormat){
+    //TODO: create more user friendly announcement, tooltip?
+    console.log('enter a number in this format mm');
+    return;
+  }
 
   //grab current time
   var currentTime = new Date();
@@ -41,9 +65,11 @@ var startCountdown = function(){
   console.log('current time', currentTime);
   console.log('deadline', deadline);
 
-  //show reset button and hide start button
+  //show reset and pause button and hide start button
   document.getElementById('start').style.display = 'none';
-  document.getElementById('reset').style.display = 'inline';
+  document.getElementById('pause').style.display = 'inline';
+  document.getElementById('reset').style.display = 'inline';  
+  
 
   //now countdown to deadline
   tick(deadline);
@@ -74,7 +100,8 @@ var tick = function(endtime){
   }
   //run first to remove delay
   updateClock();  
-  //now tick
+
+  //now tick!
   intervalHandle = setInterval(updateClock,1000);
 };
 
@@ -102,19 +129,23 @@ window.onload = function(){
 
   //create pause button
   var pauseButton = document.createElement('button');
-  pauseButton.innerText = "Pause";  
+  pauseButton.setAttribute('id', 'pause');
+  pauseButton.innerHTML = "Pause";  
   pauseButton.onclick = pauseCountdown;      
+  //hide pauseButton onload
+  pauseButton.style.display = 'none';
 
   //create start button
   var startButton = document.createElement('button');
   startButton.setAttribute('id', 'start');
-  startButton.innerText = "Start";  
+  startButton.innerHTML = "Start";  
   startButton.onclick = startCountdown;  
+
 
   //create reset button
   var resetButton = document.createElement('button');
   resetButton.setAttribute('id', 'reset');
-  resetButton.innerText = "Reset";  
+  resetButton.innerHTML = "Reset";  
   resetButton.onclick = resetCountdown;  
   //hide reset button onload 
   resetButton.style.display = 'none';
