@@ -1,5 +1,7 @@
 #folders
 node_modules/
+susy/
 
 #files
-*.txt 
+*.txt
+_susy.scss 

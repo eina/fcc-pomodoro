@@ -1,8 +1,8 @@
 //global variables
 var intervalHandle,
-    isPaused,
-    deadline;
-
+    deadline,
+    breakToggle = document.getElementById('breakToggle'),
+    isBreak = document.getElementById('breakToggle').checked;
 
 var resetCountdown = function(){
   //clear intervalHandle
@@ -53,7 +53,9 @@ var startCountdown = function(){
 
   if(isNaN(timer) && !timeFormat){
     //TODO: create more user friendly announcement, tooltip?
-    console.log('enter a number in this format mm');
+    console.log('enter a number in this format mm, mm:ss, or mm.ss');
+    //enable so user can input time again
+    document.getElementById('time').disabled = false;
     return;
   }
 
@@ -103,6 +105,11 @@ var tick = function(endtime){
 
   //now tick!
   intervalHandle = setInterval(updateClock,1000);
+};
+
+/**/
+var afterSessionEnds = function (){
+
 };
 
 //calculate remaining time
