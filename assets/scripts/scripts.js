@@ -17,6 +17,7 @@ var resetCountdown = function(){
   deadline = new Date();
   //input field enable
   document.getElementById('time').disabled = false;
+  document.getElementById('time').focus();
   //set back to 25
   document.getElementById('time').value = 25;
   //hide reset and pause button and show start button
@@ -35,6 +36,9 @@ var pauseCountdown = function(){
   var startBtn = document.getElementById('start');
   startBtn.innerHTML= 'Continue';
   startBtn.style.display = 'inline';
+
+  //hide pause button
+  document.getElementById('pause').style.display = 'none';
 
 };
 
@@ -62,6 +66,7 @@ var startCountdown = function(){
     console.log('enter a number in this format mm, mm:ss, or mm.ss');
     //enable so user can input time again
     document.getElementById('time').disabled = false;
+    document.getElementById('time').focus();
     return;
   }
 
@@ -109,13 +114,15 @@ var tick = function(endtime){
       clearInterval(intervalHandle);
       //reenable input
       document.getElementById('time').disabled = false;
-      //show start and hide reset
+      document.getElementById('time').focus();
+      //show start and hide reset and pause
       document.getElementById('start').style.display = 'inline';
+      document.getElementById('pause').style.display = 'none';  
       document.getElementById('reset').style.display = 'none';  
-
-      //pop up
-      // alertify.alert('TIME\'S UP BITCH');
-      
+      //reset title
+      document.title = 'Pomodoro - Productivity Timer';
+      //reset timer back to 25
+      document.getElementById('time').value = 25;            
       //update counter
       afterSessionEnds();
     }
@@ -127,12 +134,6 @@ var tick = function(endtime){
   intervalHandle = setInterval(updateClock,1000);
 };
 
-/** TODO:
- * 1. add audio (musicbox.mp3)
- * 2. play when timer ends
- * 3. loop until #alertBtn is clicked
- */
-
 var afterSessionEnds = function (){
   
   //audio for when timer stops
@@ -143,23 +144,22 @@ var afterSessionEnds = function (){
   });
   alarm.play();
 
+  //Update Counter, only when not on break
   var countDisplay = document.getElementById('counter');
-  //update counter if not break
   console.log(isBreak);
   //if checkbox isn't checked
   if(!isBreak){    
     counter += 1;
     console.log(counter + ' session');    
-    countDisplay.innerHTML = counter;
-    alertify.alert('WHOO BREAK TIME');
-  }else {
+    countDisplay.innerHTML = '#' + counter;
+    alertify.alert('<span class="msg-header">Break Time!</span>Make sure to <em>toggle the switch to break</em> so it doesn\'t get counted as a session!');
+  }else {    
     document.getElementById('time').value = 5;  
-    alertify.alert('GET BACK TO WORK');
+    alertify.alert('<span class="msg-header">Back to Work!</span>Make sure to <em>toggle the switch back to session</em> so it gets counted as a session.');
   }  
 
   //stop audio when alertBtn is clicked
   document.getElementById('alertBtn').onclick = function(){
-    console.log('closed modal!');
     alarm.pause();
   };
 
@@ -176,6 +176,10 @@ var clickBreakToggle = function(event){
   if(checkbox.checked){
     //checked
     isBreak = checkbox.checked;
+    //change body background color
+    document.body.className = 'green';
+    //reset clock if it's running when switched
+    resetCountdown();
     //set timer value to 5 (minutes)
     document.getElementById('time').value = 5;      
     //if you had four sessions, time for a long break
@@ -185,6 +189,11 @@ var clickBreakToggle = function(event){
   }else {
     //unchecked
     isBreak = checkbox.checked;
+    document.body.className = 'red';
+
+    //reset countdown if running
+    resetCountdown();
+
     //TODO: improve this feature later on
     //set timer value to 25 (minutes)
     document.getElementById('time').value = 25;     
@@ -209,6 +218,9 @@ var grabTimeRemaining = function(endtime){
 };
 
 window.onload = function(){
+
+  //set body background color to red
+  document.body.className = 'red';
   
   //set time to 25 minutes
   document.getElementById('time').value = 25;  
@@ -238,9 +250,18 @@ window.onload = function(){
   //hide reset button onload 
   resetButton.style.display = 'none';
 
-  document.getElementById('clock').appendChild(pauseButton);
-  document.getElementById('clock').appendChild(startButton);
-  document.getElementById('clock').appendChild(resetButton);
+  document.getElementById('buttons').appendChild(pauseButton);
+  document.getElementById('buttons').appendChild(startButton);
+  document.getElementById('buttons').appendChild(resetButton);
+
+  //show instructions on onload
+  var instructions = '<div class="instructions"><h1>Welcome!</h1><p>If you\'ve never used a pomodoro technique before, here are a few instructions:</p><ul><li>Set the timer to 15-25 minutes and start working</li><li>Take a 3-5 min. break after each session.<em> Make sure to switch the toggle to break!</em></li><li>After 4 sessions, (there\'s a counter on the upper right-hand corner), take a 15 minute break</li><li>Repeat as many times as you want!</li></ul></div>';
+  alertify.alert(instructions);
+
+  //make instructions available by clicking on the question mark
+  document.querySelector('.faq').onclick = function(){
+    alertify.alert(instructions);
+  };
     
 };
 

@@ -4,4 +4,6 @@ susy/
 
 #files
 *.txt
+*.png
+*.xd
 _susy.scss 

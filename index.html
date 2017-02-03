@@ -7,19 +7,29 @@
   <title>Pomodoro - Productivity Timer</title>
 
   <!--stylesheets-->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto:700" rel="stylesheet">
   <link rel="stylesheet" href="dist/styles/style.min.css" type="text/css">
 
 </head>
-<body>
-  <p id="counter"></p>
-  <div class="container" id="clock">
-    <div class="switch">
-      <span class="session">Session</span>
-      <input id="breakToggle" type="checkbox">
-      <label for="breakToggle">Break</label> 
+<body> 
+  <div class="container">
+    <p id="counter"></p>
+    
+    <div class="control">
+      <div class="toggle">
+        <span class="toggle-label">Session</span>
+        <label for="breakToggle" class="switch">
+          <input id="breakToggle" type="checkbox">
+          <div class="slider"></div>
+        </label> 
+        <span class="toggle-label">Break</span>      
+      </div>
+      <div class="faq">?</div>
     </div>
-    <input type="text" id="time">
+
+    <input type="text" id="time" autofocus>
     <br />
+    <div id="buttons"></div>
   </div>
 
 
