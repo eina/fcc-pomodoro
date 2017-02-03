@@ -38,13 +38,13 @@ gulp.task('styles', function(){
 
 gulp.task('scripts', function(){
     return gulp.src(['./assets/scripts/**/*.js', '!assets/scripts/**/*.min.js'])
-        // .pipe(plumber({
-        //     errorHandler: function (error) {
-        //         console.log(error.message);
-        //         this.emit('end');
-        //     }}))
+        .pipe(plumber({
+            errorHandler: function (error) {
+                console.log(error.message);
+                this.emit('end');
+            }}))
         // .pipe(concat('main.js'))
-        // .pipe(gulp.dest('assets/scripts'))
+        // .pipe(gulp.dest('dist/scripts'))
         // .pipe(rename({suffix: '.min'}))
         // .pipe(uglify())
         // .pipe(gulp.dest('dist/scripts'))

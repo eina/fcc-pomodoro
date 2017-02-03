@@ -1,9 +1,14 @@
+/*
+  POMODORO CLOCK, a project for freeCodeCamp
+  Author: Eina Onting (eina.ca)
+*/
+
 //global variables
 var intervalHandle,
     deadline,
-    counter = 0,
-    breakToggle = document.getElementById('breakToggle'),
-    isBreak;
+    counter = 0,    
+    isBreak, 
+    breakToggle = document.getElementById('breakToggle');
 
 var resetCountdown = function(){
   //clear intervalHandle
@@ -89,12 +94,15 @@ var tick = function(endtime){
     var t = grabTimeRemaining(endtime);
     
     //concatenate
-    time.value = t.minutes + ':' + t.seconds;  
+    time.value = t.minutes + ':' + t.seconds;      
     
     //leading 0's
     if(t.seconds < 10){ 
       time.value = t.minutes + ':0' + t.seconds;  
     }
+
+    //show on <title>
+    document.title = '(' + time.value + ') Pomodoro - Productivity Timer';
 
     //stop clock once it hits 0
     if(t.total <= 0){
@@ -104,6 +112,10 @@ var tick = function(endtime){
       //show start and hide reset
       document.getElementById('start').style.display = 'inline';
       document.getElementById('reset').style.display = 'none';  
+
+      //pop up
+      // alertify.alert('TIME\'S UP BITCH');
+      
       //update counter
       afterSessionEnds();
     }
@@ -115,24 +127,46 @@ var tick = function(endtime){
   intervalHandle = setInterval(updateClock,1000);
 };
 
-/*
-TODO: 
-  1. Increase counter by 1 only if break isn't checked
-  2. Display counter
-  3. make breakToggle checked
-  4. update timer to 5 or 15 depending on # of counter
-*/
+/** TODO:
+ * 1. add audio (musicbox.mp3)
+ * 2. play when timer ends
+ * 3. loop until #alertBtn is clicked
+ */
+
 var afterSessionEnds = function (){
+  
+  //audio for when timer stops
+  var alarm = new Audio('../../dist/musicbox.mp3');
+  alarm.addEventListener('ended', function(){
+    this.currentTime= 0;
+    this.play();
+  });
+  alarm.play();
+
   var countDisplay = document.getElementById('counter');
   //update counter if not break
   console.log(isBreak);
+  //if checkbox isn't checked
   if(!isBreak){    
     counter += 1;
     console.log(counter + ' session');    
     countDisplay.innerHTML = counter;
+    alertify.alert('WHOO BREAK TIME');
   }else {
     document.getElementById('time').value = 5;  
+    alertify.alert('GET BACK TO WORK');
   }  
+
+  //stop audio when alertBtn is clicked
+  document.getElementById('alertBtn').onclick = function(){
+    console.log('closed modal!');
+    alarm.pause();
+  };
+
+  //reset counter when it reaches 4
+  if (counter >= 4) {
+    counter = 0;    
+  }
 };
 
 //detect if checkbox is checked or unchecked
@@ -144,6 +178,10 @@ var clickBreakToggle = function(event){
     isBreak = checkbox.checked;
     //set timer value to 5 (minutes)
     document.getElementById('time').value = 5;      
+    //if you had four sessions, time for a long break
+    if (counter >= 4) {
+      document.getElementById('time').value = 15;  
+    }
   }else {
     //unchecked
     isBreak = checkbox.checked;
