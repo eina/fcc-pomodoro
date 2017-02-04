@@ -557,13 +557,13 @@ a {
   display: block; }
   @media (min-width: 30em) {
     .container {
-      width: 80%; } }
+      width: 85%; } }
   @media (min-width: 40em) {
     .container {
-      width: 60%; } }
+      width: 65%; } }
   @media (min-width: 45em) {
     .container {
-      width: 50%; } }
+      width: 55%; } }
   @media (min-width: 80em) {
     .container {
       width: 35%; } }
