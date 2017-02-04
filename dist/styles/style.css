@@ -501,11 +501,17 @@ textarea,
 /* General/Typography */
 body {
   font-family: 'Montserrat', sans-serif;
-  color: #F3F1F1; }
+  color: #F3F1F1;
+  position: relative; }
 
 em {
   color: #df2224;
   font-style: normal; }
+
+a {
+  color: #F3F1F1; }
+  a:hover, a:focus {
+    color: rgba(243, 241, 241, 0.8); }
 
 .title {
   font-size: 1.2em;
@@ -530,6 +536,17 @@ em {
   @media (min-width: 64em) and (min-height: 45px) {
     .header {
       margin-bottom: 10vh; } }
+
+.footer {
+  position: relative;
+  margin-top: 5em;
+  text-align: center; }
+  @media (min-height: 568px) {
+    .footer {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: 0; } }
 
 .container {
   width: 100%;

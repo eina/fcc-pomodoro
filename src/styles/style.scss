@@ -32,11 +32,21 @@ $black: #5B5050;
 body {
   font-family: 'Montserrat', sans-serif;
   color: $white;  
+  position: relative;
 }
 
 em {
   color: darken($red, 20%);
   font-style: normal;
+}
+
+a {
+  color: $white;
+  
+  &:hover, 
+  &:focus {
+    color: rgba($white, 0.8);
+  }
 }
 
 .title {
@@ -67,6 +77,19 @@ em {
 
   @media (min-width: 64em) and (min-height: 45px){ //1024px, 720px
     margin-bottom: 10vh;
+  }
+}
+
+.footer {
+  position: relative;
+  margin-top: 5em;
+  text-align: center;
+
+  @media (min-height: 568px){
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
   }
 }
 

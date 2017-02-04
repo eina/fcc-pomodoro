@@ -12,7 +12,7 @@ var browserSync = require('browser-sync');
 gulp.task('browser-sync', function() {
     browserSync({
         server: {
-            baseDir: "./"
+            baseDir: "./dist"
         }
     });
 });
@@ -59,7 +59,7 @@ gulp.task('minifyhtml', function(){
 });
 
 gulp.task('default', ['browser-sync'], function(){
-    gulp.watch("./assets/styles/**/*.scss", ['styles']);
-    gulp.watch("./assets/scripts/**/*.js", ['scripts']);
-    gulp.watch("./*.html", ['bs-reload']);
+    gulp.watch("./src/styles/**/*.scss", ['styles']);
+    gulp.watch("./src/scripts/**/*.js", ['scripts']);
+    gulp.watch("./dist/*.html", ['bs-reload']);
 });
