@@ -22,10 +22,12 @@ $black: #5B5050;
 /* Classes for JS */
 .red {
   background-color: $red;
+  background-image: linear-gradient(to bottom, darken($red, 1%), transparent);
 }
 
 .green {
   background-color: $green;
+  background-image: linear-gradient(to top, darken($green, 15%), transparent);
 }
 
 /* General/Typography */

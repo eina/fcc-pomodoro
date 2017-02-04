@@ -493,10 +493,12 @@ textarea,
 
 /* Classes for JS */
 .red {
-  background-color: #EC7B7C; }
+  background-color: #EC7B7C;
+  background-image: linear-gradient(to bottom, #eb7778, transparent); }
 
 .green {
-  background-color: #91D1BF; }
+  background-color: #91D1BF;
+  background-image: linear-gradient(to top, #5bbaa0, transparent); }
 
 /* General/Typography */
 body {
