@@ -234,7 +234,7 @@
       var buttonContainer = document.getElementById('buttons');
       buttonContainer.appendChild(createButton('start', 'inline', start));
       buttonContainer.appendChild(createButton('pause', 'none', pause));
-      buttonContainer.appendChild(createButton('reset', 'none', reset));
+      buttonContainer.appendChild(createButton('reset', 'none', reset));      
 
       //Load Modal      
       loadModal(modalText.instructions);
@@ -247,6 +247,17 @@
       document.querySelector('.faq').onclick = function(){
         loadModal(modalText.instructions);
       };      
+
+      //enter key on input 
+      timeInput.onkeypress = function(e){
+        var event = e || window.event;
+        var charCode = event.which || event.keyCode;
+
+        if(charCode === 13){
+          start();
+          return false;
+        }
+      }
     };
     
     //run on load
