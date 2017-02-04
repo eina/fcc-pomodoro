@@ -72,12 +72,12 @@ a {
   overflow: auto;
 
   @media (min-height: 40px){ //640px
-    margin-bottom: 5vh;
-  }
-
-  @media (min-width: 64em) and (min-height: 45px){ //1024px, 720px
     margin-bottom: 10vh;
   }
+
+  // @media (min-width: 64em) and (min-height: 45px){ //1024px, 720px
+    // margin-bottom: 12vh;
+  // }
 }
 
 .footer {
@@ -121,7 +121,7 @@ a {
 .control {
   font-family: 'Roboto', sans-serif;  
   padding-top: 2em;
-  margin: 3em 0;
+  margin: 4em 0;
   overflow: auto;
 
   @media (min-height: 40px){ //640px
@@ -155,7 +155,7 @@ a {
 
 input {  
   width: 100%;
-  margin-bottom: 0.5em;  
+  margin-bottom: 0.7em;  
   text-align: center;
   font-size: 13vh;
   font-family: 'Montserrat', sans-serif;
