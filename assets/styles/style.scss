@@ -1,3 +1,16 @@
+/**
+* Table of Contents:
+* 1. Reset
+//1.1 Variables
+* 2. Classes for JS
+* 3. General/Typography
+* 4. Layout
+* 5. Buttons
+* 6. Toggle Switch
+* 7. Modal Overrides/Style
+*/
+
+/* Reset */
 @import 'base/sanitize';
 
 //Variables
@@ -6,7 +19,7 @@ $green: #91D1BF;
 $white: #F3F1F1;
 $black: #5B5050;
 
-//body background classes
+/* Classes for JS */
 .red {
   background-color: $red;
 }
@@ -15,6 +28,7 @@ $black: #5B5050;
   background-color: $green;
 }
 
+/* General/Typography */
 body {
   font-family: 'Montserrat', sans-serif;
   color: $white;  
@@ -25,28 +39,74 @@ em {
   font-style: normal;
 }
 
-.container {
-  margin: 0 auto;
-  padding: 1em 1.5em;
+.title {
+  font-size: 1.2em;
+  line-height: 1.4;
+  float: left;
 }
 
 #counter {
   height: 20px;
-  margin-bottom: 3em;
   text-align: right;
-}
-
-.control {
-  font-family: 'Roboto', sans-serif;  
-  padding-top: 2em;
-  margin-bottom: 3em;
-  overflow: auto;
 }
 
 .toggle-label {
   font-size: 100%;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* Layout */
+
+.header {
+  overflow: auto;
+
+  @media (min-height: 40px){ //640px
+    margin-bottom: 5vh;
+  }
+
+  @media (min-width: 64em) and (min-height: 45px){ //1024px, 720px
+    margin-bottom: 10vh;
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;  
+  margin: 0 auto;
+  padding: 1em 1.5em;
+  display: block;
+
+  @media (min-width: 30em){ //480px
+    width: 80%;
+  }
+
+  @media (min-width: 40em){ //640px
+    width: 60%;
+  }
+
+  @media (min-width: 45em){ //720px
+    width: 50%;
+  }
+
+  @media (min-width: 80em){ //1280px
+    width: 35%;
+  }
+}
+
+.control {
+  font-family: 'Roboto', sans-serif;  
+  padding-top: 2em;
+  margin: 3em 0;
+  overflow: auto;
+
+  @media (min-height: 40px){ //640px
+    margin-top: 0;
+  }
+
+  @media (min-width: 80em){ //1280px
+  }
 }
 
 .toggle {
@@ -87,6 +147,8 @@ input[disabled]{
   color: $white;  
 }
 
+/* Buttons */
+
 #buttons {
   text-align: center;
 }
@@ -110,7 +172,6 @@ button {
   }
 }
 
-
 .red button {
   color: $red;
 }
@@ -119,7 +180,8 @@ button {
   color: $green;
 }
 
-// Toggle Switch
+/* Toggle Switch */
+
 .switch {
   position: relative;
   display: inline-block;
@@ -171,7 +233,7 @@ input:checked + .slider:before {
   transform: translateX(18px);
 }
 
-//Instructions Modal
+/* Instructions Modal */
 
 //override modal settings
 .dialog {

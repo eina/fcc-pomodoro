@@ -1,3 +1,15 @@
+/**
+* Table of Contents:
+* 1. Reset
+//1.1 Variables
+* 2. Classes for JS
+* 3. General/Typography
+* 4. Layout
+* 5. Buttons
+* 6. Toggle Switch
+* 7. Modal Overrides/Style
+*/
+/* Reset */
 /*! sanitize.css v4.0.0 | CC0 License | github.com/10up/sanitize.css */
 /* Display definitions
    ========================================================================== */
@@ -479,12 +491,14 @@ textarea,
 [hidden][aria-hidden="false"]:focus {
   clip: auto; }
 
+/* Classes for JS */
 .red {
   background-color: #EC7B7C; }
 
 .green {
   background-color: #91D1BF; }
 
+/* General/Typography */
 body {
   font-family: 'Montserrat', sans-serif;
   color: #F3F1F1; }
@@ -493,25 +507,58 @@ em {
   color: #df2224;
   font-style: normal; }
 
-.container {
-  margin: 0 auto;
-  padding: 1em 1.5em; }
+.title {
+  font-size: 1.2em;
+  line-height: 1.4;
+  float: left; }
 
 #counter {
   height: 20px;
-  margin-bottom: 3em;
   text-align: right; }
-
-.control {
-  font-family: 'Roboto', sans-serif;
-  padding-top: 2em;
-  margin-bottom: 3em;
-  overflow: auto; }
 
 .toggle-label {
   font-size: 100%;
   text-transform: uppercase;
   letter-spacing: 0.5px; }
+
+/* Layout */
+.header {
+  overflow: auto; }
+  @media (min-height: 40px) {
+    .header {
+      margin-bottom: 5vh; } }
+  @media (min-width: 64em) and (min-height: 45px) {
+    .header {
+      margin-bottom: 10vh; } }
+
+.container {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 1em 1.5em;
+  display: block; }
+  @media (min-width: 30em) {
+    .container {
+      width: 80%; } }
+  @media (min-width: 40em) {
+    .container {
+      width: 60%; } }
+  @media (min-width: 45em) {
+    .container {
+      width: 50%; } }
+  @media (min-width: 80em) {
+    .container {
+      width: 35%; } }
+
+.control {
+  font-family: 'Roboto', sans-serif;
+  padding-top: 2em;
+  margin: 3em 0;
+  overflow: auto; }
+  @media (min-height: 40px) {
+    .control {
+      margin-top: 0; } }
 
 .toggle {
   float: left; }
@@ -543,6 +590,7 @@ input[disabled] {
   background-color: transparent;
   color: #F3F1F1; }
 
+/* Buttons */
 #buttons {
   text-align: center; }
 
@@ -567,6 +615,7 @@ button {
 .green button {
   color: #91D1BF; }
 
+/* Toggle Switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -610,6 +659,7 @@ input:focus + .slider {
 input:checked + .slider:before {
   transform: translateX(18px); }
 
+/* Instructions Modal */
 .dialog {
   color: #5B5050 !important; }
   .dialog div {

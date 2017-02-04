@@ -1,3 +1,8 @@
+/**
+ * POMODORO - PRODUCTIVITY TIMER
+ * A project for freeCodeCamp's Front End Certificate
+ * by Eina Onting (eina.ca / github.com/thelittleblacksmith)
+ */
 (function(){
   "use strict";
   var Pomodoro = function(){
@@ -61,7 +66,7 @@
       intervalHandle = setInterval(updateClock,1000);
     };
 
-    var timeFinished = function(){
+    var timeFinished = function(){      
       //play a tune when time's up
       var alarm = new Audio('../../dist/musicbox.mp3');
       alarm.addEventListener('ended', function(){
@@ -148,14 +153,21 @@
       clearInterval(intervalHandle);
       //reset <title>
       document.title = 'Pomodoro - Productivity Timer';
-      //enable input & focus, reset time to 25
+      //enable input & focus
       timeInput.disabled = false;
       timeInput.focus();
-      timeInput.value = 25;
+      //check if it's break vs session and reset time accdg to that
+      if(document.body.className === 'green'){      
+        timeInput.value = 5;
+      }else {
+        timeInput.value = 25;
+      }            
       //hide pause & reset, show start
       buttonDisplay('start','inline');
       buttonDisplay('pause','none');
       buttonDisplay('reset','none');
+      //make sure start button says start
+      document.getElementById('start').innerHTML = 'Start';
     };   
 
     //detect change in checkbox

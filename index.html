@@ -13,23 +13,28 @@
 </head>
 <body> 
   <div class="container">
-    <p id="counter"></p>
+    <div class="header">
+      <h1 class="title">Productivity Timer</h1>
+      <p id="counter"></p>
+    </div>    
     
-    <div class="control">
-      <div class="toggle">
-        <span class="toggle-label">Session</span>
-        <label for="breakToggle" class="switch">
-          <input id="breakToggle" type="checkbox">
-          <div class="slider"></div>
-        </label> 
-        <span class="toggle-label">Break</span>      
+    <div class="inner">
+      <div class="control">
+        <div class="toggle">
+          <span class="toggle-label">Session</span>
+          <label for="breakToggle" class="switch">
+            <input id="breakToggle" type="checkbox">
+            <div class="slider"></div>
+          </label> 
+          <span class="toggle-label">Break</span>      
+        </div>
+        <div class="faq">?</div>
       </div>
-      <div class="faq">?</div>
-    </div>
 
-    <input type="text" id="time" autofocus>
-    <br />
-    <div id="buttons"></div>
+      <input type="text" id="time" autofocus>
+      <br />
+      <div id="buttons"></div>
+    </div>    
   </div>
 
 
