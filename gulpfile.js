@@ -6,6 +6,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifycss = require('gulp-cssnano');
 var sass = require('gulp-sass');
+var htmlmin = require('gulp-htmlmin');
 var browserSync = require('browser-sync');
 
 gulp.task('browser-sync', function() {
@@ -21,7 +22,7 @@ gulp.task('bs-reload', function () {
 });
 
 gulp.task('styles', function(){
-    gulp.src(['./assets/styles/**/*.scss', '!assets/styles/**/*.min.css'])
+    gulp.src(['./src/styles/**/*.scss', '!src/styles/**/*.min.css'])
         .pipe(plumber({
             errorHandler: function (error) {
                 console.log(error.message);
@@ -37,20 +38,25 @@ gulp.task('styles', function(){
 });
 
 gulp.task('scripts', function(){
-    return gulp.src(['./assets/scripts/**/*.js', '!assets/scripts/**/*.min.js'])
+    return gulp.src(['./src/scripts/**/*.js', '!src/scripts/**/*.min.js'])
         .pipe(plumber({
             errorHandler: function (error) {
                 console.log(error.message);
                 this.emit('end');
             }}))
-        // .pipe(concat('main.js'))
-        // .pipe(gulp.dest('dist/scripts'))
-        // .pipe(rename({suffix: '.min'}))
-        // .pipe(uglify())
-        // .pipe(gulp.dest('dist/scripts'))
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest('dist/scripts'))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/scripts'))
         .pipe(browserSync.reload({stream:true}))
 });
 
+gulp.task('minifyhtml', function(){
+    return gulp.src('src/*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('dist'));
+});
 
 gulp.task('default', ['browser-sync'], function(){
     gulp.watch("./assets/styles/**/*.scss", ['styles']);
