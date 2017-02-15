@@ -635,6 +635,7 @@ button {
 .switch {
   position: relative;
   display: inline-block;
+  margin: 0 0.5em;
   vertical-align: middle;
   width: 45px;
   height: 22px; }

@@ -68,7 +68,7 @@
 
     var timeFinished = function(){      
       //play a tune when time's up
-      var alarm = new Audio('../../dist/musicbox.mp3');
+      var alarm = new Audio('./musicbox.mp3');
       alarm.addEventListener('ended', function(){
         this.currentTime= 0;
         this.play();
